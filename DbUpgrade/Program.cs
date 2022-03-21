@@ -23,10 +23,12 @@ namespace DbUpgrade
             if (args.Length != 1)
             {
                 Console.WriteLine("Argument number incorrect. Pass the module to be updated.");
+
+                return;
             }
             var moduleParamCorect = Enum.TryParse(args[0], true, out ModuleName moduleName);
             // Setup Host
-            var host = CreateDefaultBuilder(moduleParamCorect? moduleName : ModuleName.Oms).Build();
+            var host = CreateDefaultBuilder(moduleParamCorect ? moduleName : ModuleName.Oms).Build();
         
             // Invoke DatabaseUpgradeService
             using IServiceScope serviceScope = host.Services.CreateScope();

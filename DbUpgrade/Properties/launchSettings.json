@@ -2,7 +2,7 @@
   "profiles": {
     "DbUpgrade": {
       "commandName": "Project",
-      "commandLineArgs": "idm"
+      "commandLineArgs": "oms"
     }
   }
 }

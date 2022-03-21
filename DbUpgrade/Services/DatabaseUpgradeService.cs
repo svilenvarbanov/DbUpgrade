@@ -45,15 +45,15 @@ namespace DbUpgrade.Services
                 return;
             }
 
-            var currentVersion = new DbVersionModel(_dbVersionEntity.Version);
-            var scriptFolders = EnumerateDatabaseUpgradesVersionsFolders()
-                .Where(fn => new DbVersionModel(fn) > currentVersion)
-                .ToList();
-
             if (_dbUpSettings.CheckoutLastRepoVersion)
             {
                 _gitRepoService.Pull();
             }
+
+            var currentVersion = new DbVersionModel(_dbVersionEntity.Version);
+            var scriptFolders = EnumerateDatabaseUpgradesVersionsFolders()
+                .Where(fn => new DbVersionModel(fn) > currentVersion)
+                .ToList();
 
             if (scriptFolders.Count == 0)
             {
