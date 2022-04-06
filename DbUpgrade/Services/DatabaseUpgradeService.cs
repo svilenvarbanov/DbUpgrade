@@ -37,7 +37,7 @@ namespace DbUpgrade.Services
         {
             _dbVersionEntity =
                 _dbContext.Versions.SingleOrDefault(v => v.Module == _dbUpSettings.Module && v.IsActive);
-            
+
             if (_dbVersionEntity == null)
             {
                 _logger.Error("Couldn't find module: {Module}", _dbUpSettings.Module);
@@ -90,7 +90,7 @@ namespace DbUpgrade.Services
             {
                 try
                 {
-                    _logger.Info("RUNNING SCRIPT: {script} IN FOLDER: {folder}", script.Name, scriptsRootPath);
+                    _logger.Info("RUNNING SCRIPT: {script} IN FOLDER: {folder}", script.Name, scriptsRootPath + "\\" + dbVersionScript);
                     string scriptText = File.ReadAllText(script.FullName);
 
                     var sqlConnection = new SqlConnection(_dbUpSettings.ConnectionString);
