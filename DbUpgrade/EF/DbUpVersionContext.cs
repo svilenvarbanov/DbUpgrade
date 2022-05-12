@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
-using DbUpgrade.Models;
+﻿using DbUpgrade.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DbUpgrade.EF
 {
-    public class DbUpContext : DbContext
+    public class DbUpVersionContext : DbContext
     {
         private readonly DbUpConfiguration _settings;
-        public DbUpContext(DbContextOptions<DbUpContext> options, DbUpConfiguration settings)
+        public DbUpVersionContext(DbContextOptions<DbUpVersionContext> options, DbUpConfiguration settings)
             : base(options)
         {
             _settings = settings;
         }
-        
-        public DbSet<DbVersion> Versions{ get; set; }
+
+        public DbSet<DbVersion> Versions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

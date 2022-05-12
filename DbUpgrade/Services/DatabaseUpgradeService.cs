@@ -16,14 +16,14 @@ namespace DbUpgrade.Services
     public class DatabaseUpgradeService : IDatabaseUpgradeService
     {
         private readonly DbUpConfiguration _dbUpSettings;
-        private readonly DbUpContext _dbContext;
+        private readonly DbUpVersionContext _dbContext;
         private readonly ILogger _logger;
         private readonly IGitRepoService _gitRepoService;
         private DbVersion _dbVersionEntity;
 
         public DatabaseUpgradeService(
             DbUpConfiguration dbUpSettings,
-            DbUpContext dbContext,
+            DbUpVersionContext dbContext,
             ILogger<DatabaseUpgradeService> logger,
             IGitRepoService gitRepoService)
         {
@@ -35,6 +35,7 @@ namespace DbUpgrade.Services
 
         public void UpgradeDatabase()
         {
+            _logger.Info("Starting database upgrade. Connection: {connectionString}", _dbUpSettings.ConnectionString);
             _dbVersionEntity =
                 _dbContext.Versions.SingleOrDefault(v => v.Module == _dbUpSettings.Module && v.IsActive);
 

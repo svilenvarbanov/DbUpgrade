@@ -2,7 +2,7 @@
   "profiles": {
     "DbUpgrade": {
       "commandName": "Project",
-      "commandLineArgs": "oms"
+      "commandLineArgs": "pay"
     }
   }
 }

@@ -9,6 +9,7 @@
         Cam,
         Tax,
         Fees,
-        Trans
+        Trans,
+        Pay
     }
 }

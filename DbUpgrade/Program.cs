@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace DbUpgrade
 {
@@ -27,9 +26,13 @@ namespace DbUpgrade
                 return;
             }
             var moduleParamCorect = Enum.TryParse(args[0], true, out ModuleName moduleName);
+            if (!moduleParamCorect)
+            {
+                Console.WriteLine("Module name '{0}' incorrect. Selecting payments module by default.", args[0]);
+            }
             // Setup Host
-            var host = CreateDefaultBuilder(moduleParamCorect ? moduleName : ModuleName.Oms).Build();
-        
+            var host = CreateDefaultBuilder(moduleParamCorect ? moduleName : ModuleName.Pay).Build();
+
             // Invoke DatabaseUpgradeService
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
@@ -51,7 +54,8 @@ namespace DbUpgrade
                     services.AddSingleton<IDatabaseUpgradeService, DatabaseUpgradeService>();
                     services.AddSingleton(ctx.Configuration.GetSection("Services")?.Get<List<DbUpConfiguration>>()?.SingleOrDefault(dbc => dbc.Name.ToLower() == moduleName.ToString().ToLower()) ?? throw new ConfigurationErrorsException($"Invalid configuration for module {moduleName}"));
                     services.AddLogging(configure => configure.AddSystemdConsole());
-                    services.AddDbContext<DbUpContext>(options => options.UseSqlServer("name=Services:0:ConnectionString"));
+                    //services.AddDbContext<DbUpVersionContext>(options => options.UseSqlServer("name=Services:0:ConnectionString"));
+                    services.AddDbContext<DbUpVersionContext>(options => options.UseSqlServer("name=VersioningDatabaseConnectionString"));
                     services.AddTransient<IGitRepoService, GitRepoService>();
                 });
 
