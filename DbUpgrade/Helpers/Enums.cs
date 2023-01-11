@@ -1,6 +1,6 @@
 ﻿namespace DbUpgrade.Helpers
 {
-    enum ModuleName
+    internal enum ModuleName
     {
         Oms,
         Rdm,
@@ -10,6 +10,7 @@
         Tax,
         Fees,
         Trans,
-        Pay
+        Pay,
+        Sec
     }
 }
